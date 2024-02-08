@@ -13,7 +13,7 @@ var eliminarVariable = app.procedure("eliminarVariable");
 
 //HOLA que tal
 
-
+//Vamos a probar
 
 //Variables globales
 document.getElementById("screenPaciente").style.display = "none";
