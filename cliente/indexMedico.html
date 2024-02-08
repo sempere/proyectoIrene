@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <div id="screenLogin">
+        Usuario: <input id="login" type="text" value="irene10"/>
+        Password: <input id="password" type="text" value="1"/>
+        <button onclick="login(document.getElementById('login').value, document.getElementById('password').value)">Login</button>
+    </div>
+
+    <div id="screenMedico">
+        <div>D/Dª <span id="nombreMedico"></span>, le damos la bienvenida al sistema de gestión del Hospital</div>
+        <div id="pacientes">
+
+        </div>
+        <div id="screenPaciente">
+            <div>
+                Nombre: <input id="nombrePacienteVer"/>
+            </div>
+            <div>
+                Observaciones: <input id="observacionesPacienteVer"/>
+            </div>
+            <input type="hidden" id="idPaciente"/>
+            <div id="muestras">
+                
+            </div>
+        </div>
+    
+        <div id="screenForm">
+            <div class="nuevoPaciente editarPaciente">
+                Nombre: <input id="nombrePaciente" type="text"/>
+            </div>
+            <div class="nuevoPaciente editarPaciente">
+                Fecha de nacimiento: <input type="date" id="fechaPaciente" 
+                                        name="trip-start"
+                                        value="2022-05-10"
+                                        min="1900-01-01" max="2022-12-31">
+            </div>
+            <div class="nuevoPaciente editarPaciente">
+                Género: <select id="generoPaciente">
+                    <option value="H">Hombre</option>
+                    <option value="M">Mujer</option>
+                </select>
+            </div>
+            <div id="inputCodigoPaciente">
+                Código de acceso: <input type="text" id="codigoPaciente"/>
+            </div>
+            <div class="nuevoPaciente editarPaciente">
+                Observaciones: <input type="text" id="observacionesPaciente"/>
+            </div>
+            <div class="nuevoPaciente editarPaciente">
+                <button onclick="nuevoPaciente()">Nuevo paciente</button>
+            </div>
+        </div>
+    </div>
+
+    
+
+    
+
+    <script src="rest.js"></script>
+    <script src="mainMedico.js"></script>
+</body>
+
+</html>

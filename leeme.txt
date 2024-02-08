@@ -1,0 +1,52 @@
+Crear un servidor RPC
+---------------------
+
+* Necesitas el archivo "rpc.js" de la carpeta servidor
+
+* En la carpeta donde tengas el servidor necesitas los módulos: express y cors (instalar con npm install ...)
+
+* En el código del servidor:
+
+  - Obtener una referencia a la librería:
+    var rpc = require("./rpc.js");
+
+  - Definir todas las funciones (procedimientos) que se necesiten. Son funciones Javascript normales.
+
+  - Crear un servidor RPC:
+    var servidor = rpc.server();
+
+  - Crear una aplicación RPC (o las que se necesiten) en el servidor:
+    var app = servidor.createApp("IDENTIFICADOR_DE_LA_APLICACION");
+
+  - Registrar los procedimientos asociados a la aplicación RPC:
+    app.register(NOMBRE_DE_LA_FUNCION_A_REGISTRAR);
+
+
+Crear un cliente RPC
+--------------------
+
+* En la web hay que incluir las librerías para navegador rest.js y rpc.js (esta es distinta a la del servidor):
+  <script src="rest.js"></script>   -> incluir antes de rpc (NO MODIFICAR)
+  <script src="rpc.js"></script>    -> está librería es la de cliente (distinta de la de node) (NO MODIFICAR)
+  <script src="main.js"></script>   -> este último es el JS donde está el código de mi aplicación
+
+* En el JS con el código de la aplicación:
+
+  - Obtener una referencia a la aplicación RPC del servidor:
+    var app = rpc("SERVIDOR(puede ser localhost)", "IDENTIFICADOR_DE_LA_APLICACION");
+
+  - Obtener una referencia a los procedimientos registrados por el servidor en esa aplicación:
+    var miProcedimiento = app.procedure("miProcedimiento");
+
+  - El procedimiento se puede usar como una función Javascript normal:
+    miProcedimiento();
+
+  - Si se utiliza en modo SÍNCRONO:
+    valor = miProcedimiento(argumento1, argumento2);
+
+  - Si se utiliza en modo ASÍNCRONO:
+    miProcedimiento(argumento1, argumento2, function (valor) {
+      // ...
+    });
+
+

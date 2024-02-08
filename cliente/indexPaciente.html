@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+     
+
+</head>
+<body>
+    <div id="screenLogin">
+        <label>Código de acceso<input type="text" id="codigo_acceso" value="AL87"/></label>
+        <button onclick="login()">Login</button>
+    </div>
+
+
+    
+    <div id="screenPaciente">
+        <div>
+            <button onclick="salir()">Salir</button>
+            <div>D/Dª <span id="nombrePaciente"></span> le damos la bienvenida al sistema.</div>
+            <div>Nombre de su médico: <span id="nombreMedico"></span></div>
+            <div>Observaciones: <span id="observaciones"></span></div>
+        </div>
+        <div>
+            <label>Variables</label>
+        </div>
+        <form>
+            <div id="filtroVariables">
+                
+            </div>
+        </form>
+        <div>            
+            <ul id="variables">
+
+            </ul>
+        </div>
+        <div id="formNuevaMuestra">
+            <select id="selectVariableNuevaMuestra"></select>
+            <label>Valor<input type="number" id="valorMuestra"/></label>
+            <label>Fecha<input type="date" id="fechaMuestra"/></label>
+            <button id="buttonNuevaMuestra" onclick="nuevaMuestra()">Añadir</button>
+        </div>
+        <div id="screenCompartir">
+            <label>Muestra a compartir:</label>
+            <div>
+                Nombre: <label id="nombreCompartir"></label>
+            </div>
+            <div>
+                Valor: <label id="valorCompartir"></label>
+            </div>
+            <div>
+                Fecha: <label id="fechaCompartir"></label>
+            </div>
+            <div><input type="radio" name="compartir" value="todos" 
+                onclick="mostrarPacientesCompartir()" checked="true"/>
+                Los pacientes de tu médico</div>
+            <div><input type="radio" name="compartir" 
+                onclick="mostrarPacientesCompartir()" value="medico"/>
+                A tu médico</div>
+            <div><input type="radio" name="compartir" value="paciente" 
+                onclick="mostrarPacientesCompartir()"/>
+                Un paciente en concreto
+                <select id="selectCompartir"></select>
+            </div>
+            <div><button onclick="enviarCompartir()">Enviar</button></div>
+
+        </div>
+    </div>
+
+    
+    <script src="rest.js"></script>  
+    <script src="rpc.js"></script>   
+    <script src="mainPaciente.js"></script>
+</body>
+
+
+</html>
