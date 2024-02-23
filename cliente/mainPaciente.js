@@ -3,6 +3,7 @@ var app = rpc("localhost", "MiGestionPacientes")
 //Lista de funciones disponibles en el servidor RPC
 ////////////////////////////////////////////////////////////
 var loginPaciente = app.procedure("login");
+//PRUEBA
 var datosMedico = app.procedure("datosMedico");
 var obtenerMuestras = app.procedure("listadoMuestras");
 var obtenerVariables = app.procedure("listadoVariables");
