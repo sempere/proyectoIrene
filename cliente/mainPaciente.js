@@ -3,7 +3,6 @@ var app = rpc("localhost", "MiGestionPacientes")
 //Lista de funciones disponibles en el servidor RPC
 ////////////////////////////////////////////////////////////
 var loginPaciente = app.procedure("login");
-//PRUEBA
 var datosMedico = app.procedure("datosMedico");
 var obtenerMuestras = app.procedure("listadoMuestras");
 var obtenerVariables = app.procedure("listadoVariables");
@@ -12,9 +11,6 @@ var eliminarMuestra = app.procedure("eliminarMuestra");
 var eliminarVariable = app.procedure("eliminarVariable");
 
 
-//HOLA que tal
-
-//Vamos a probar
 
 //Variables globales
 document.getElementById("screenPaciente").style.display = "none";
@@ -28,15 +24,15 @@ document.getElementById('fechaMuestra').valueAsDate = new Date();
 var paciente = {};
 document.getElementById("screenCompartir").style.display = "none";
 
-
+//------------------------------ PARTE LOGIN
 function login() {
     var codigo = document.getElementById("codigo_acceso").value;
 
-    loginPaciente(codigo, function(paciente) {
-        if(paciente) {
+    loginPaciente(codigo, function(pacienteServidor) {
+        if(pacienteServidor) {
+            paciente = pacienteServidor;
             document.getElementById("screenPaciente").style.display = "inline";
             document.getElementById("screenLogin").style.display = "none";
-            var medico = datosMedico(paciente.medico);
             datosMedico(paciente.medico, function(medico) {
                 document.getElementById("nombrePaciente").innerHTML = paciente.nombre;
                 document.getElementById("nombreMedico").innerHTML = medico.nombre;
@@ -52,6 +48,7 @@ function login() {
     });
     
 }
+//LOGOUT
 function salir(){
     document.getElementById("screenLogin").style.display = "inline";
     document.getElementById("screenPaciente").style.display = "none";
@@ -79,23 +76,27 @@ function mostrarVariables() {
     }
 }
 function mostrarMuestras(idPaciente) {
-    muestras = obtenerMuestras(idPaciente);   
     document.getElementById("variables").innerHTML = "";
-    for(var i = 0; i < muestras.length; i++) {
-        var muestra = muestras[i];
-        var variable = buscaVariable(muestra.variable);
-        document.getElementById("variables").innerHTML += "<li id='muestra" +
-                muestra.id + "'>" +  
-                new Date(muestra.fecha).toLocaleString() + 
-                " - " + variable.nombre + " = " + 
-                muestra.valor + "<button onclick='eliminar(" + 
-                muestra.id + ")'>" + 
-                "Eliminar</button>"+
-                "<button onclick='compartir(\"" + 
-                variable.nombre + "\"," + muestra.valor + ",\"" + 
-                muestra.fecha + 
-                "\")'>Compartir</button></li>";
-    }
+    obtenerMuestras(idPaciente, function(muestrasServidor) {
+        muestras = muestrasServidor;
+        for(var i = 0; i < muestras.length; i++) {
+            var muestra = muestras[i];
+            var variable = buscaVariable(muestra.variable);
+            document.getElementById("variables").innerHTML += "<li id='muestra" +
+                    muestra.id + "'>" +  
+                    new Date(muestra.fecha).toLocaleString() + 
+                    " - " + variable.nombre + " = " + 
+                    muestra.valor + "<button onclick='eliminar(" + 
+                    muestra.id + ")'>" + 
+                    "Eliminar</button>"+
+                    "<button onclick='compartir(\"" + 
+                    variable.nombre + "\"," + muestra.valor + ",\"" + 
+                    muestra.fecha + 
+                    "\")'>Compartir</button></li>";
+        }
+    });   
+    
+    
 }
 function buscaVariable(idVariable) {
     for(var i = 0; i < variables.length; i++) {
@@ -104,27 +105,37 @@ function buscaVariable(idVariable) {
         }
     }
 }
+//-------------------------------------------------------------------------
 function filtrarVariable(idVariable) {
     document.getElementById("variables").innerHTML = "";
     for(var i = 0; i < muestras.length; i++) {
         if(idVariable == -1 || muestras[i].variable == idVariable) {
             var muestra = muestras[i];
+            var variable = buscaVariable(muestra.variable);
             document.getElementById("variables").innerHTML += "<li>" + 
                     new Date(muestra.fecha).toLocaleString() + 
                     " - " + buscaVariable(muestra.variable).nombre + " = " + 
-                    muestra.valor + "</li>";
+                    muestra.valor + "<button onclick='eliminar(" + 
+                    muestra.id + ")'>" + 
+                    "Eliminar</button>"+
+                    "<button onclick='compartir(\"" + 
+                    variable.nombre + "\"," + muestra.valor + ",\"" + 
+                    muestra.fecha + 
+                    "\")'>Compartir</button></li>";
         }
     }
 }
 
 function nuevaMuestra() {
     if(document.getElementById("valorMuestra").value != "") {
-        var idMuestra = anyadirMuestra(paciente.id, 
+        anyadirMuestra([paciente.id, 
             parseInt(document.getElementById("selectVariableNuevaMuestra").value),
             new Date(document.getElementById("fechaMuestra").value),
-            parseInt(document.getElementById("valorMuestra").value)
-        );
-        mostrarMuestras(paciente.id);
+            parseInt(document.getElementById("valorMuestra").value)], function(idMuestra) {
+                mostrarMuestras(paciente.id);
+            });
+        
+        
     } else {
         alert("Introduzca un valor para la muestra");
     }
