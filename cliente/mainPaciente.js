@@ -27,7 +27,6 @@ document.getElementById("screenCompartir").style.display = "none";
 //------------------------------ PARTE LOGIN
 function login() {
     var codigo = document.getElementById("codigo_acceso").value;
-
     loginPaciente(codigo, function(pacienteServidor) {
         if(pacienteServidor) {
             paciente = pacienteServidor;
