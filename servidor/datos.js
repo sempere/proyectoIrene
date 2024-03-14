@@ -24,13 +24,16 @@ var variables = [
 ];
 var siguienteVariable = 5;
 var muestras = [
-    {id:1, paciente:1, variable:1, fecha:new Date(2022, 4, 10, 13, 30, 00), valor:80},
-    {id:2, paciente:1, variable:2, fecha:new Date(2022, 4, 10, 13, 30, 00), valor:182},
-    {id:3, paciente:1, variable:3, fecha:new Date(2022, 4, 10, 13, 30, 00), valor:4000},
-    {id:4, paciente:1, variable:4, fecha:new Date(2022, 4, 10, 13, 30, 00), valor:60},
-    {id:5, paciente:2, variable:1, fecha:new Date(2022, 4, 10, 13, 30, 00), valor:75},
-    {id:6, paciente:2, variable:2, fecha:new Date(2022, 4, 10, 13, 30, 00), valor:170},
-    {id:7, paciente:2, variable:3, fecha:new Date(2022, 4, 10, 13, 30, 00), valor:1000},
+    {id:1, paciente:1, variable:1, fecha:new Date(2024, 1, 1, 13, 30, 00), valor:70},
+    {id:2, paciente:1, variable:1, fecha:new Date(2024, 2, 1, 13, 30, 00), valor:80},
+    {id:3, paciente:1, variable:1, fecha:new Date(2024, 3, 1, 13, 30, 00), valor:75},
+    {id:4, paciente:1, variable:1, fecha:new Date(2024, 4, 1, 13, 30, 00), valor:78},
+    {id:5, paciente:1, variable:2, fecha:new Date(2022, 4, 10, 13, 30, 00), valor:182},
+    {id:6, paciente:1, variable:3, fecha:new Date(2022, 4, 10, 13, 30, 00), valor:4000},
+    {id:7, paciente:1, variable:4, fecha:new Date(2022, 4, 10, 13, 30, 00), valor:60},
+    {id:8, paciente:2, variable:1, fecha:new Date(2022, 4, 10, 13, 30, 00), valor:75},
+    {id:9, paciente:2, variable:2, fecha:new Date(2022, 4, 10, 13, 30, 00), valor:170},
+    {id:10, paciente:2, variable:3, fecha:new Date(2022, 4, 10, 13, 30, 00), valor:1000},
 ];
 var siguienteMuestra = 8;
 

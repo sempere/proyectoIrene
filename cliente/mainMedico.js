@@ -9,6 +9,7 @@ document.getElementById("screenMedico").style.display = "none";
 //Variables globales
 var idMedico;
 var variables = [];
+var muestrasGlobal = [];
 
 function login(login, password) {
     var credentials = { login : login, password : password};
@@ -32,6 +33,8 @@ function login(login, password) {
 function goToScreenMedico() {
     document.getElementById("screenMedico").style.display = "inline";
     document.getElementById("screenLogin").style.display = "none";
+    document.getElementById("screenFormNuevoPaciente").style.display = "none";
+    document.getElementById("screenFormEditarPaciente").style.display = "none";
 
     rest.get("http://localhost:8080/api/medico/" + idMedico, function (estado, respuesta) {
         if (estado != 200) {
@@ -48,13 +51,17 @@ function actualizaListaPacientes() {
                 var listaPacientes = document.getElementById("pacientes");
                 listaPacientes.innerHTML="";
                 for (var i = 0; i < respuesta.length; i++) {
-                    listaPacientes.innerHTML += "<div>Paciente " + respuesta[i].id + " - " + 
+                    listaPacientes.innerHTML += "<div>Paciente " + (i+1) + " con identificador: " + respuesta[i].id + " - " + 
                             respuesta[i].nombre + "<button onclick='verPaciente(" + respuesta[i].id + ")'>Ver</button>" +
                             //"<button onclick='duplicar(" + respuesta[i].id + ")'>Duplicar</button>" +
                             "</div>";
                 }
             }
         });
+}
+function abrirNuevoPaciente() {
+    document.getElementById("screenFormNuevoPaciente").style.display = "inline";
+    document.getElementById("screenFormEditarPaciente").style.display = "none";
 }
 function nuevoPaciente() {
     var paciente = {
@@ -75,28 +82,58 @@ function nuevoPaciente() {
 }
 function verPaciente(idPaciente) {
     rest.get("http://localhost:8080/api/paciente/" + idPaciente, function (estado, pacienteRes) {
+
+        document.getElementById("screenFormNuevoPaciente").style.display = "none";
+        document.getElementById("screenFormEditarPaciente").style.display = "inline";
+
         document.getElementById("nombrePacienteVer").value = pacienteRes.nombre;
         document.getElementById("observacionesPacienteVer").value = pacienteRes.observaciones;
         document.getElementById("idPaciente").value = pacienteRes.id;
         rest.get("http://localhost:8080/api/paciente/" + idPaciente + "/muestras", 
             function (estadoMuestras, muestras) {
+                muestrasGlobal = muestras;
+                //Construir el filtro
+                var filtro = document.getElementById("filtradoMuestras");
+                filtro.innerHTML = "<h3>Filtrar muestras por variable</h3>";
+                filtro.innerHTML += "<input type='radio' name='variables' onclick='filtrarMuestras(-60)'>Todas las variables</input>";
+                for(var i = 0; i < variables.length; i++) {
+                    filtro.innerHTML += "<input type='radio' name='variables'" +
+                            " onclick='filtrarMuestras(" + variables[i].id + ")'>"                       
+                            + variables[i].nombre + "</input>";
+                }
+
+
                 var listaMuestras = document.getElementById("muestras");
                 listaMuestras.innerHTML = "";
                 muestras.forEach(function(muestra) {
-                    listaMuestras.innerHTML += "<div>" + getNombreMuestra(muestra.variable) + 
-                            " - " + muestra.valor + "</div>";
+                    listaMuestras.innerHTML += "<li>" + new Date(muestra.fecha).toLocaleString() + " " + 
+                            getNombreVariable(muestra.variable) + 
+                            " = " + muestra.valor + "</li>";
                 });
                 listaMuestras.innerHTML += "<button onclick='guardarPaciente()'>Guardar</button>";
             });
     });
 }
-function getNombreMuestra(idVariable) {
+function getNombreVariable(idVariable) {
     for(var i = 0; i < variables.length;i++) {
         if(variables[i].id == idVariable) {
             return variables[i].nombre;
         }
     }
 }
+function filtrarMuestras(idVariable) {
+    var listaMuestras = document.getElementById("muestras");
+    listaMuestras.innerHTML = "";
+    muestrasGlobal.forEach(function(muestra) {
+        if(muestra.variable == idVariable || idVariable < 0) {
+            listaMuestras.innerHTML += "<li>" + new Date(muestra.fecha).toLocaleString() + " " + 
+                    getNombreVariable(muestra.variable) + 
+                    " = " + muestra.valor + "</li>";
+        }
+    });
+}
+
+
 
 //Funcion para guardar el paciente una vez editado
 function guardarPaciente() {

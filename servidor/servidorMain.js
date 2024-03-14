@@ -89,7 +89,10 @@ app.get("/api/paciente/:id", function(req, res) {
                 id : paciente.id,
                 nombre : paciente.nombre,
                 medico : paciente.medico,
-                observaciones : paciente.observaciones
+                observaciones : paciente.observaciones,
+                fecha_nacimiento : paciente.fecha_nacimiento,
+                genero : paciente.genero,
+                codigo_acceso : paciente.codigo_acceso
             }
             res.status(200).json(pacienteRes);
             encontrado = true;

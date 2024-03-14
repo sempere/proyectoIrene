@@ -13,42 +13,72 @@
         <div id="pacientes">
 
         </div>
-        <div id="screenPaciente">
+
+        <button onclick="abrirNuevoPaciente()">Crear paciente</button>
+
+        <div id="screenFormEditarPaciente">
+            -------------------------------------------------------------
+            <h3>Editar paciente</h3>
             <div>
-                Nombre: <input id="nombrePacienteVer"/>
+                Nombre: <input id="nombrePacienteVer" type="text"/>
             </div>
             <div>
-                Observaciones: <input id="observacionesPacienteVer"/>
-            </div>
-            <input type="hidden" id="idPaciente"/>
-            <div id="muestras">
-                
-            </div>
-        </div>
-    
-        <div id="screenForm">
-            <div class="nuevoPaciente editarPaciente">
-                Nombre: <input id="nombrePaciente" type="text"/>
-            </div>
-            <div class="nuevoPaciente editarPaciente">
                 Fecha de nacimiento: <input type="date" id="fechaPaciente" 
                                         name="trip-start"
                                         value="2022-05-10"
                                         min="1900-01-01" max="2022-12-31">
             </div>
-            <div class="nuevoPaciente editarPaciente">
+            <div>
                 Género: <select id="generoPaciente">
                     <option value="H">Hombre</option>
                     <option value="M">Mujer</option>
                 </select>
             </div>
-            <div id="inputCodigoPaciente">
+            <div>
                 Código de acceso: <input type="text" id="codigoPaciente"/>
             </div>
-            <div class="nuevoPaciente editarPaciente">
-                Observaciones: <input type="text" id="observacionesPaciente"/>
+            <div>
+                Observaciones: <input type="text" id="observacionesPacienteVer"/>
             </div>
-            <div class="nuevoPaciente editarPaciente">
+            <div>
+                <button onclick="nuevoPaciente()">Nuevo paciente</button>
+            </div>
+            
+            <input type="hidden" id="idPaciente"/>
+            
+            <div id="filtradoMuestras">
+                
+            </div>
+            <ul id="muestras">
+                
+            </ul>
+        </div>
+    
+        <div id="screenFormNuevoPaciente">
+            -------------------------------------------------------------
+            <h3>Creación de paciente</h3>
+            <div>
+                Nombre: <input id="nombrePacienteNuevo" type="text"/>
+            </div>
+            <div>
+                Fecha de nacimiento: <input type="date" id="fechaPacienteNuevo" 
+                                        name="trip-start"
+                                        value="2022-05-10"
+                                        min="1900-01-01" max="2022-12-31">
+            </div>
+            <div>
+                Género: <select id="generoPacienteNuevo">
+                    <option value="H">Hombre</option>
+                    <option value="M">Mujer</option>
+                </select>
+            </div>
+            <div>
+                Código de acceso: <input type="text" id="codigoPacienteNuevo"/>
+            </div>
+            <div>
+                Observaciones: <input type="text" id="observacionesPacienteNuevo"/>
+            </div>
+            <div>
                 <button onclick="nuevoPaciente()">Nuevo paciente</button>
             </div>
         </div>
