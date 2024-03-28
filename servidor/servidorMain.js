@@ -106,6 +106,9 @@ app.put("/api/paciente/:id", function(req, res) {
     var idPaciente = req.params.id;
     var nombrePacienteEdit = req.body.nombre;
     var observacionesPacienteEdit = req.body.observaciones;
+    var fechaNacPacienteEdit = req.body.fecha;
+    var codigoPacienteEdit = req.body.codigo_acceso;
+    var generoPacienteEdit = req.body.genero;
     var encontrado = false;
     //reemplazo de los datos del paciente
     for(var i = 0; i < pacientes.length && !encontrado; i++) {
@@ -117,6 +120,11 @@ app.put("/api/paciente/:id", function(req, res) {
             if(observacionesPacienteEdit != "") {
                 pacientes[i].observaciones = observacionesPacienteEdit;
             }
+            if(codigoPacienteEdit != "") {
+                pacientes[i].codigo_acceso = codigoPacienteEdit;
+            }
+            pacientes[i].fecha_nacimiento = fechaNacPacienteEdit;
+            pacientes[i].genero = generoPacienteEdit;
             console.log("Paciente con id: " + pacientes[i].id + " ha sido editado con nombre " + nombrePacienteEdit + 
                      " y observaciones: " + observacionesPacienteEdit);
         }
@@ -200,13 +208,14 @@ function listadoMuestras(idPaciente) {
 function listadoVariables() {
     return variables;
 }
-function agregarMuestra(idPaciente, idVariable, fecha, valor) {
+function agregarMuestra(request) {
+ 
     var muestraNueva = {
         id : siguienteMuestra++,
-        paciente : idPaciente,
-        variable : idVariable,
-        fecha : fecha,
-        valor : valor
+        paciente : request.idPaciente,
+        variable : request.idVariable,
+        fecha : request.fecha,
+        valor : request.valor
     }
     muestras.push(muestraNueva);
     return muestraNueva.id;

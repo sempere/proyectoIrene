@@ -65,12 +65,12 @@ function abrirNuevoPaciente() {
 }
 function nuevoPaciente() {
     var paciente = {
-        nombre : document.getElementById("nombrePaciente").value,
-        fecha : new Date(document.getElementById("fechaPaciente").value),
-        genero : document.getElementById("generoPaciente").value,
+        nombre : document.getElementById("nombrePacienteNuevo").value,
+        fecha : new Date(document.getElementById("fechaPacienteNuevo").value),
+        genero : document.getElementById("generoPacienteNuevo").value,
         medico : idMedico,
-        codigo_acceso : document.getElementById("codigoPaciente").value,
-        observaciones : document.getElementById("observacionesPaciente").value
+        codigo_acceso : document.getElementById("codigoPacienteNuevo").value,
+        observaciones : document.getElementById("observacionesPacienteNuevo").value
     }
 
     rest.post("http://localhost:8080/api/medico/" + idMedico + "/pacientes", paciente, function (estado, respuesta) {
@@ -78,7 +78,7 @@ function nuevoPaciente() {
     });
 
     var fechaNueva = new Date().toISOString().substring(0,10);
-    document.getElementById("fechaPaciente").value = fechaNueva;
+    document.getElementById("fechaPacienteNuevo").value = fechaNueva;
 }
 function verPaciente(idPaciente) {
     rest.get("http://localhost:8080/api/paciente/" + idPaciente, function (estado, pacienteRes) {
@@ -88,29 +88,34 @@ function verPaciente(idPaciente) {
 
         document.getElementById("nombrePacienteVer").value = pacienteRes.nombre;
         document.getElementById("observacionesPacienteVer").value = pacienteRes.observaciones;
+        var fechaPaciente = pacienteRes.fecha_nacimiento.substring(0,10);
+        document.getElementById("fechaPacienteVer").value = fechaPaciente;
+        document.getElementById("generoPacienteVer").value = pacienteRes.genero;
+        document.getElementById("codigoPacienteVer").value = pacienteRes.codigo_acceso;
         document.getElementById("idPaciente").value = pacienteRes.id;
         rest.get("http://localhost:8080/api/paciente/" + idPaciente + "/muestras", 
             function (estadoMuestras, muestras) {
-                muestrasGlobal = muestras;
-                //Construir el filtro
                 var filtro = document.getElementById("filtradoMuestras");
-                filtro.innerHTML = "<h3>Filtrar muestras por variable</h3>";
-                filtro.innerHTML += "<input type='radio' name='variables' onclick='filtrarMuestras(-60)'>Todas las variables</input>";
-                for(var i = 0; i < variables.length; i++) {
-                    filtro.innerHTML += "<input type='radio' name='variables'" +
-                            " onclick='filtrarMuestras(" + variables[i].id + ")'>"                       
-                            + variables[i].nombre + "</input>";
-                }
-
-
+                filtro.innerHTML = "";
                 var listaMuestras = document.getElementById("muestras");
                 listaMuestras.innerHTML = "";
-                muestras.forEach(function(muestra) {
-                    listaMuestras.innerHTML += "<li>" + new Date(muestra.fecha).toLocaleString() + " " + 
-                            getNombreVariable(muestra.variable) + 
-                            " = " + muestra.valor + "</li>";
-                });
-                listaMuestras.innerHTML += "<button onclick='guardarPaciente()'>Guardar</button>";
+                if(muestras.length > 0) {
+                    muestrasGlobal = muestras;
+                    //Construir el filtro
+                    filtro.innerHTML = "<h3>Filtrar muestras por variable</h3>";
+                    filtro.innerHTML += "<input type='radio' name='variables' onclick='filtrarMuestras(-60)'>Todas las variables</input>";
+                    for(var i = 0; i < variables.length; i++) {
+                        filtro.innerHTML += "<input type='radio' name='variables'" +
+                                " onclick='filtrarMuestras(" + variables[i].id + ")'>"                       
+                                + variables[i].nombre + "</input>";
+                    }                 
+                    
+                    muestras.forEach(function(muestra) {
+                        listaMuestras.innerHTML += "<li>" + new Date(muestra.fecha).toLocaleString() + " " + 
+                                getNombreVariable(muestra.variable) + 
+                                " = " + muestra.valor + "</li>";
+                    });
+                }
             });
     });
 }
@@ -136,12 +141,16 @@ function filtrarMuestras(idVariable) {
 
 
 //Funcion para guardar el paciente una vez editado
-function guardarPaciente() {
-    var nombrePacienteEdit = document.getElementById("nombrePacienteVer").value;
-    var obsPacienteEdit = document.getElementById("observacionesPacienteVer").value;
-    var request = { nombre : nombrePacienteEdit, observaciones : obsPacienteEdit};
+function editarPaciente() {
+    var paciente = { 
+        nombre : document.getElementById("nombrePacienteVer").value,
+        fecha : new Date(document.getElementById("fechaPacienteVer").value),
+        genero : document.getElementById("generoPacienteVer").value,
+        codigo_acceso : document.getElementById("codigoPacienteVer").value,
+        observaciones : document.getElementById("observacionesPacienteVer").value
+    };
     var idPaciente = document.getElementById("idPaciente").value; 
-    rest.put("http://localhost:8080/api/paciente/" + idPaciente, request, function (estado, respuesta) {
+    rest.put("http://localhost:8080/api/paciente/" + idPaciente, paciente, function (estado, respuesta) {
         if(estado == 200) {
             alert("Paciente modificado con éxito!!");
             actualizaListaPacientes();

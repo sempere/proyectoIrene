@@ -127,10 +127,12 @@ function filtrarVariable(idVariable) {
 
 function nuevaMuestra() {
     if(document.getElementById("valorMuestra").value != "") {
-        anyadirMuestra([paciente.id, 
-            parseInt(document.getElementById("selectVariableNuevaMuestra").value),
-            new Date(document.getElementById("fechaMuestra").value),
-            parseInt(document.getElementById("valorMuestra").value)], function(idMuestra) {
+        var envioDatosMuestra = {
+            idPaciente : paciente.id, 
+            idVariable : parseInt(document.getElementById("selectVariableNuevaMuestra").value),
+            fecha : new Date(document.getElementById("fechaMuestra").value),
+            valor : parseInt(document.getElementById("valorMuestra").value)};
+        anyadirMuestra(envioDatosMuestra, function(idMuestra) {
                 mostrarMuestras(paciente.id);
             });
         

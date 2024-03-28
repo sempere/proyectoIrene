@@ -9,7 +9,7 @@ var pacientes = [
     {id:1, nombre:"Álvaro", fecha_nacimiento:new Date(1987, 01, 27), 
     genero:'H', medico:1, codigo_acceso:"AL87", observaciones:"Problemas de ansiedad"},
     {id:2, nombre:"Pepe", fecha_nacimiento:new Date(1990, 03, 27), 
-    genero:'H', medico:1, codigo_acceso:"PE90", observaciones:"Problemas de ansiedad"},
+    genero:'M', medico:1, codigo_acceso:"PE90", observaciones:"Problemas de ansiedad"},
     {id:3, nombre:"Marta", fecha_nacimiento:new Date(1987, 02, 27), 
     genero:'M', medico:2, codigo_acceso:"MA87", observaciones:"Problemas de ansiedad"},
     {id:4, nombre:"Rocío", fecha_nacimiento:new Date(1994, 01, 10), 

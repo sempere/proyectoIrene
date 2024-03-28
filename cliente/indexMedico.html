@@ -18,30 +18,30 @@
 
         <div id="screenFormEditarPaciente">
             -------------------------------------------------------------
-            <h3>Editar paciente</h3>
+            <h3>Ver datos del paciente</h3>
             <div>
                 Nombre: <input id="nombrePacienteVer" type="text"/>
             </div>
             <div>
-                Fecha de nacimiento: <input type="date" id="fechaPaciente" 
+                Fecha de nacimiento: <input type="date" id="fechaPacienteVer" 
                                         name="trip-start"
                                         value="2022-05-10"
-                                        min="1900-01-01" max="2022-12-31">
+                                        min="1900-01-01" max="2026-12-31">
             </div>
             <div>
-                Género: <select id="generoPaciente">
+                Género: <select id="generoPacienteVer">
                     <option value="H">Hombre</option>
                     <option value="M">Mujer</option>
                 </select>
             </div>
             <div>
-                Código de acceso: <input type="text" id="codigoPaciente"/>
+                Código de acceso: <input type="text" id="codigoPacienteVer"/>
             </div>
             <div>
                 Observaciones: <input type="text" id="observacionesPacienteVer"/>
             </div>
             <div>
-                <button onclick="nuevoPaciente()">Nuevo paciente</button>
+                <button onclick="editarPaciente()">Actualizar datos</button>
             </div>
             
             <input type="hidden" id="idPaciente"/>
