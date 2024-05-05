@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-     
+    <link rel="stylesheet" href="paciente.css">
 
 </head>
 <body>
@@ -17,26 +17,29 @@
 
     
     <div id="screenPaciente">
-        <div>
-            <button onclick="salir()">Salir</button>
+        <div> <button onclick="salir()">Salir</button></div>
+       
+        <div class="seccion">
+            <h3>Datos</h3>
             <div>D/Dª <span id="nombrePaciente"></span> le damos la bienvenida al sistema.</div>
             <div>Nombre de su médico: <span id="nombreMedico"></span></div>
             <div>Observaciones: <span id="observaciones"></span></div>
         </div>
-        <div>
-            <label>Variables</label>
+        <div class="seccion">
+            <h2>Variables</h2>
+        
+            <form>
+                <div id="filtroVariables">
+                
+                </div>
+            </form>
         </div>
-        <form>
-            <div id="filtroVariables">
-               
-            </div>
-        </form>
-        <div>            
+        <div class="seccion">            
             <ul id="variables">
 
             </ul>
         </div>
-        <div id="formNuevaMuestra">
+        <div class="seccion" id="formNuevaMuestra">
             <select id="selectVariableNuevaMuestra"></select>
             <label>Valor<input type="number" id="valorMuestra"/></label>
             <label>Fecha<input type="date" id="fechaMuestra"/></label>

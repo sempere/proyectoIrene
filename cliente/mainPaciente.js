@@ -8,7 +8,6 @@ var obtenerMuestras = app.procedure("listadoMuestras");
 var obtenerVariables = app.procedure("listadoVariables");
 var anyadirMuestra = app.procedure("agregarMuestra");
 var eliminarMuestra = app.procedure("eliminarMuestra");
-var eliminarVariable = app.procedure("eliminarVariable");
 
 
 
@@ -23,6 +22,7 @@ var pacientes = [];
 document.getElementById('fechaMuestra').valueAsDate = new Date();
 var paciente = {};
 document.getElementById("screenCompartir").style.display = "none";
+var idVariableSeleccionada = -1;
 
 //------------------------------ PARTE LOGIN
 function login() {
@@ -67,7 +67,6 @@ function mostrarVariables() {
             "<input type='radio' name='variables'" + 
             "onclick = 'filtrarVariable(" + variables[i].id + ")'/>" + 
             variables[i].nombre + 
-            //"<button onclick='eliminarVariableYActualizar(" + variables[i].id + ")'>Eliminar variable</button>" + 
             "</label></div>";
         document.getElementById("selectVariableNuevaMuestra").innerHTML += 
             "<option value='" + variables[i].id + "')>" + variables[i].nombre +
@@ -79,19 +78,21 @@ function mostrarMuestras(idPaciente) {
     obtenerMuestras(idPaciente, function(muestrasServidor) {
         muestras = muestrasServidor;
         for(var i = 0; i < muestras.length; i++) {
-            var muestra = muestras[i];
-            var variable = buscaVariable(muestra.variable);
-            document.getElementById("variables").innerHTML += "<li id='muestra" +
-                    muestra.id + "'>" +  
-                    new Date(muestra.fecha).toLocaleString() + 
-                    " - " + variable.nombre + " = " + 
-                    muestra.valor + "<button onclick='eliminar(" + 
-                    muestra.id + ")'>" + 
-                    "Eliminar</button>"+
-                    "<button onclick='compartir(\"" + 
-                    variable.nombre + "\"," + muestra.valor + ",\"" + 
-                    muestra.fecha + 
-                    "\")'>Compartir</button></li>";
+            if(idVariableSeleccionada == -1 || muestras[i].variable == idVariableSeleccionada) {
+                var muestra = muestras[i];
+                var variable = buscaVariable(muestra.variable);
+                document.getElementById("variables").innerHTML += "<li id='muestra" +
+                        muestra.id + "'>" +  
+                        new Date(muestra.fecha).toLocaleString() + 
+                        " - " + variable.nombre + " = " + 
+                        muestra.valor + "<button onclick='eliminar(" + 
+                        muestra.id + ")'>" + 
+                        "Eliminar</button>"+
+                        "<button onclick='compartir(\"" + 
+                        variable.nombre + "\"," + muestra.valor + ",\"" + 
+                        muestra.fecha + 
+                        "\")'>Compartir</button></li>";
+            }
         }
     });   
     
@@ -106,6 +107,7 @@ function buscaVariable(idVariable) {
 }
 //-------------------------------------------------------------------------
 function filtrarVariable(idVariable) {
+    idVariableSeleccionada = idVariable;
     document.getElementById("variables").innerHTML = "";
     for(var i = 0; i < muestras.length; i++) {
         if(idVariable == -1 || muestras[i].variable == idVariable) {
@@ -143,11 +145,13 @@ function nuevaMuestra() {
 }
 
 function eliminar(idMuestra) {
-    var retorno = eliminarMuestra(idMuestra);
-    if(!retorno) {
-        console.log("Error eliminando la muestra");
-    }
-    mostrarMuestras(paciente.id);
+    eliminarMuestra(idMuestra, function(retorno) {
+        if(!retorno) {
+            console.log("Error eliminando la muestra");
+        }
+        mostrarMuestras(paciente.id);
+    })
+    
 }
 function compartir(nombre, valor, fecha) {
     document.getElementById("screenCompartir").style.display = "inline";
@@ -181,11 +185,6 @@ function mostrarPacientesCompartir() {
 
 
 
-/*function eliminarVariableYActualizar(idVariable) {
-    eliminarVariable(idVariable);
-    mostrarVariables();
-    mostrarMuestras(paciente.id);
-}*/
 //PARTE 3. Websockets
 var conexion = undefined;
 

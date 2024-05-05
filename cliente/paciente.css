@@ -1,0 +1,9 @@
+.seccion {
+    margin: 10px;
+    border-bottom: thick double #80399c;
+    padding: 15px;
+}
+
+button {
+    margin: 10px;
+}
