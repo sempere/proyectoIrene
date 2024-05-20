@@ -64,6 +64,7 @@ function abrirNuevoPaciente() {
     document.getElementById("screenFormEditarPaciente").style.display = "none";
 }
 function nuevoPaciente() {
+    
     var paciente = {
         nombre : document.getElementById("nombrePacienteNuevo").value,
         fecha : new Date(document.getElementById("fechaPacienteNuevo").value),
@@ -79,6 +80,10 @@ function nuevoPaciente() {
 
     var fechaNueva = new Date().toISOString().substring(0,10);
     document.getElementById("fechaPacienteNuevo").value = fechaNueva;
+    document.getElementById("nombrePacienteNuevo").value = "";
+    document.getElementById("generoPacienteNuevo").value = "O";
+    document.getElementById("codigoPacienteNuevo").value = "";
+    document.getElementById("observacionesPacienteNuevo").value = "";
 }
 function verPaciente(idPaciente) {
     rest.get("http://localhost:8080/api/paciente/" + idPaciente, function (estado, pacienteRes) {
@@ -158,14 +163,7 @@ function editarPaciente() {
     });
 }
 
-/*function duplicar(idPaciente) {
-    rest.get("http://localhost:8080/api/paciente/" + idPaciente + "/difundir/", function (estado, pacienteRes) {
-        if(estado == 200) {
-            alert("Paciente duplicado con éxito!");
-            actualizaListaPacientes();
-        }
-    });
-}*/
+
 ////////////////////////////////////////////////
 //PARTE 3 - Websockets de la parte de médico
 var conexion = undefined;

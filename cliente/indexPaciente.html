@@ -45,30 +45,32 @@
             <label>Fecha<input type="date" id="fechaMuestra"/></label>
             <button id="buttonNuevaMuestra" onclick="nuevaMuestra()">Añadir</button>
         </div>
-        <div id="screenCompartir">
-            <label>Muestra a compartir:</label>
-            <div>
-                Nombre: <label id="nombreCompartir"></label>
+        <div id="screenCompartir" class="modal">
+            <div class="contenido-modal">
+                <div><button onclick="cerrarModalCompartir()">Cerrar</button></div>
+                <label>Muestra a compartir:</label>
+                <div>
+                    Nombre: <label id="nombreCompartir"></label>
+                </div>
+                <div>
+                    Valor: <label id="valorCompartir"></label>
+                </div>
+                <div>
+                    Fecha: <label id="fechaCompartir"></label>
+                </div>
+                <div><input type="radio" name="compartir" value="todos" 
+                    onclick="mostrarPacientesCompartir()" checked="true"/>
+                    Los pacientes de tu médico</div>
+                <div><input type="radio" name="compartir" 
+                    onclick="mostrarPacientesCompartir()" value="medico"/>
+                    A tu médico</div>
+                <div><input type="radio" name="compartir" value="paciente" 
+                    onclick="mostrarPacientesCompartir()"/>
+                    Un paciente en concreto
+                    <select id="selectCompartir"></select>
+                </div>
+                <div><button onclick="enviarCompartir()">Enviar</button></div>
             </div>
-            <div>
-                Valor: <label id="valorCompartir"></label>
-            </div>
-            <div>
-                Fecha: <label id="fechaCompartir"></label>
-            </div>
-            <div><input type="radio" name="compartir" value="todos" 
-                onclick="mostrarPacientesCompartir()" checked="true"/>
-                Los pacientes de tu médico</div>
-            <div><input type="radio" name="compartir" 
-                onclick="mostrarPacientesCompartir()" value="medico"/>
-                A tu médico</div>
-            <div><input type="radio" name="compartir" value="paciente" 
-                onclick="mostrarPacientesCompartir()"/>
-                Un paciente en concreto
-                <select id="selectCompartir"></select>
-            </div>
-            <div><button onclick="enviarCompartir()">Enviar</button></div>
-
         </div>
     </div>
 

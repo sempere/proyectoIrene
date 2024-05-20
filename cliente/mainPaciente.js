@@ -90,7 +90,7 @@ function mostrarMuestras(idPaciente) {
                         "Eliminar</button>"+
                         "<button onclick='compartir(\"" + 
                         variable.nombre + "\"," + muestra.valor + ",\"" + 
-                        muestra.fecha + 
+                        new Date(muestra.fecha).toLocaleString() + 
                         "\")'>Compartir</button></li>";
             }
         }
@@ -121,7 +121,7 @@ function filtrarVariable(idVariable) {
                     "Eliminar</button>"+
                     "<button onclick='compartir(\"" + 
                     variable.nombre + "\"," + muestra.valor + ",\"" + 
-                    muestra.fecha + 
+                    new Date(muestra.fecha).toLocaleString() + 
                     "\")'>Compartir</button></li>";
         }
     }
@@ -244,8 +244,22 @@ function enviarCompartir() {
                         infoRequest: infoRequest }
                     ));                   
             }
+
+            var mensajeEnviado = "Se ha enviado que " +
+                " el día " + document.getElementById("fechaCompartir").innerHTML + 
+                " se realizó la actividad '" + 
+                document.getElementById("nombreCompartir").innerHTML + 
+                "' y se obtuvo un valor de " + 
+                document.getElementById("valorCompartir").innerHTML;
+            alert(mensajeEnviado);
         }
     }
+    document.getElementById("screenCompartir").style.display = "none";
+
+}
+
+function cerrarModalCompartir() {
+    document.getElementById("screenCompartir").style.display = "none";
 }
 
 

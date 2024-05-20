@@ -145,33 +145,6 @@ app.get("/api/paciente/:id/muestras", function(req, res) {
     });
     res.status(200).json(muestrasRes);
 });
-/*app.get("/api/paciente/:id/difundir/", function(req, res) {
-    var idPaciente = req.params.id;
-    var encontrado = false;
-    for(var i = 0; i < pacientes.length; i++) {
-        if(pacientes[i].id == idPaciente) {
-            encontrado = true;
-            var pacienteAux = pacientes[i];
-            var pacienteNuevo = {
-                nombre : pacienteAux.nombre,
-                fecha_nacimiento : pacienteAux.fecha,
-                genero : pacienteAux.genero,
-                medico : pacienteAux.medico,
-                codigo_acceso : pacienteAux.codigo_acceso,
-                observaciones : pacienteAux.observaciones,
-                id : siguientePaciente
-            }
-            siguientePaciente++;
-            console.log("Paciente con id: " + pacienteNuevo.id + " ha sido duplicado");
-            pacientes.push(pacienteNuevo);
-            res.status(201).json(pacientes);
-        }
-    }
-    if(!encontrado) {
-        res.status(404).json("Paciente no encontrado");
-    }
-}); */  
-
 
 app.listen(8080);
 //////////////////////////////////////////////////////////
